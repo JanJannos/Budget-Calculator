@@ -47,7 +47,19 @@ var UIController = (function () {
 // Global App Controller
 var controller = (function(budgetCtrl , UICtrl){
 
-    var DOM = UICtrl.getDOMStrings();
+    var setupEventListeners = function() {
+        var DOM = UICtrl.getDOMStrings();            
+        document.querySelector(DOM.inputButton).addEventListener('click' , ctrlAddItem); 
+        document.addEventListener('keypress' , function(event) {
+            if (event.keyCode === 13 || event.which === 13){
+                console.log('Enter Was Pressed');
+                ctrlAddItem();
+            }
+
+        });        
+    };
+    
+    
     var ctrlAddItem = function() {
             // get the filed input data
         
@@ -61,18 +73,37 @@ var controller = (function(budgetCtrl , UICtrl){
             console.log('ctrlAddItem was called!');
     }
     
+
     
-    // document.querySelector('.add__btn').addEventListener('click' , ctrlAddItem);
-    document.querySelector(DOM.inputButton).addEventListener('click' , ctrlAddItem); 
-    document.addEventListener('keypress' , function(event) {
-             // console.log(event);
-        
-            if (event.keyCode === 13 || event.which === 13){
-                console.log('Enter Was Pressed');
-                ctrlAddItem();
-            }
-        
-    });
+// Moving the following code into the function "setupEventListeners" above
+    
+// document.querySelector('.add__btn').addEventListener('click' , ctrlAddItem);
+//    document.querySelector(DOM.inputButton).addEventListener('click' , ctrlAddItem); 
+//    document.addEventListener('keypress' , function(event) {
+//             // console.log(event);
+//        
+//            if (event.keyCode === 13 || event.which === 13){
+//                console.log('Enter Was Pressed');
+//                ctrlAddItem();
+//            }
+//        
+//    });
+    
+    
+    
+    // Now we need to call the "setupEventListeners" function ... this is how
+    
+    return {
+        init: function() {
+            console.log('Application Has Started!');
+            setupEventListeners();
+        }
+    }
     
     
 })(budgetController , UIController);
+
+
+
+// and here we call the "init" function
+controller.init();
